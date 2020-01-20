@@ -27,7 +27,8 @@ export default {
         const success = await firebase
           .auth()
           .signInWithEmailAndPassword(this.email, this.password);
-        console.log(success.json());
+
+        console.log(success);
         alert(`congrats ${this.email} you have successfully signed in`);
         this.$router.push("/home");
       } catch (error) {
