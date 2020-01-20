@@ -1,24 +1,40 @@
 <template>
   <div class="sign-up">
-    <input type="text" placeholder="Email" />
-    <input type="password" placeholder="Password" />
-    <button>Sign In</button>
-    <span>return to login</span>
+    <input type="text" v-model="email" placeholder="Email" />
+    <input type="password" v-model="password" placeholder="Password" />
+    <button @click="signup">Sign In</button>
+    <router-link to="/login">return to login</router-link>
   </div>
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
   name: "Signup",
   data() {
     return {};
   },
-  methods: {}
+  methods: {
+    signup: async function(item) {
+      console.log(item);
+      try {
+        const success = await firebase
+          .auth()
+          .createUserWithEmailAndPassword(this.email, this.password);
+        console.log(success);
+        alert(`success ${this.emial} your account has been created`);
+        this.$router.push("/home");
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+  }
 };
 </script>
 
 <style scoped>
-.login {
+.sign-up {
   display: flex;
   width: 100%;
   height: 100%;
@@ -39,12 +55,7 @@ button {
   cursor: pointer;
 }
 
-p {
-  margin-top: 40px;
-  font-size: 13px;
-}
-
-p a {
+a {
   text-decoration: underline;
   cursor: pointer;
 }
